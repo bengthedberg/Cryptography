@@ -12,7 +12,7 @@ To avoid manage and keep this shared key safe the sender will **generate a uniqu
 2 - Generate a random 128 bit initialization vector.  
 3 - Encrypt the message using the Session Key and the IV.  
 4 - Create a HMAC using the session key as the authentication code and HASH the encrypted message.
-5 - Use the senders private key to sign the HMAC Hah.
+5 - Use the senders private key to sign the HMAC Hash.  
 
 The hybrid solution will use asymmetric encryption to protect the session key above. 
 
