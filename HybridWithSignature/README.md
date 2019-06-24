@@ -7,7 +7,7 @@ This example combines the benefits with symmetric encryption, asymmetric encrypt
 The principle is that the message is encrypted using symmetric encryption; **[AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 256 bit encryption with a random initialization vector, (iv)**. 
 
 The advantage of this is that AES is **fast** and **secure**.   
-The disadvatage is that symmetric encryption uses the same key to encrypt/decrypt so both sender and receiver need to share the key.   
+The disadvantage is that symmetric encryption uses the same key to encrypt/decrypt so both sender and receiver need to share the key.   
 To avoid manage and keep this shared key safe the sender will **generate a unique session key** and incorporate that key as part of the encrypted message object. 
 
 1 - Generate a unique session key, AES 256 bit encryption.  
@@ -25,7 +25,7 @@ So finally the sender must use the receivers **public key to encrypt the session
 
 6 - Use the **[RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) 2046 bit public key** to encrypt the AES 256 bit session key.   
 
-7 - To add non-repudiation and authorisartion the sender will use their private kay to generate a [digital signature](https://en.wikipedia.org/wiki/Digital_signature)    
+7 - To add non-repudiation and authorisation the sender will use their private kay to generate a [digital signature](https://en.wikipedia.org/wiki/Digital_signature)    
 
 Now the sender can transmit the encrypted data:
 
@@ -38,11 +38,11 @@ Now the sender can transmit the encrypted data:
 The receiver will process the message in the following order:
 
 1 - Decrypt the session key by using their private key.  
-2 - Create a HMAC using the decrypted session key and HASH the encrypted data. If its not the same as the received HMAC value then the data has been corrupted.   
+2 - Create a HMAC using the decrypted session key and HASH the encrypted data. If it's not the same as the received HMAC value, then the data has been corrupted.   
 3 - Verify the signature by using the senders public key.
 3 - If HMACs are identical and the signature is valid then the receiver can decrypt the encrypted message using the session key and the provided IV.
 
-The hybrid solution combines the convinience of the assymtric key sharing model with the efficiency of the symmetric encryption model. 
+The hybrid solution combines the convenience  of the asymmetric key sharing model with the efficiency of the symmetric encryption model. 
 
 * Key encryption scheme  
 * Data encapsulation scheme  
@@ -51,9 +51,9 @@ We also added message integrity validation:
 
 * HMAC involving a cryptographic hash function and a secret cryptographic key.
 
-And finally we added a signature to verify that the message originates from a specific origin, i.e. its non-repudiation.
+And finally, we added a signature to verify that the message originates from a specific origin, i.e. its non-repudiation.
 
-This example supports the four principles of cryptograhy : 
+This example supports the four principles of cryptography: 
 
 - Confidentiality - Encrypting data prevents it from being accessed without required keys. 
 - Integrity - In many scenarios, the sender and receiver of a message may have a need for confidence that the message has not been altered during transmission. Using HMAC will add this confidence as it uses the AES session key to HASH the encrypted message.
