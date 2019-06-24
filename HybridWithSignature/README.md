@@ -1,8 +1,10 @@
 ﻿# Hybrid Encryption with Digital Signatures
 
+[Hybrid Crypto System](https://en.wikipedia.org/wiki/Hybrid_cryptosystem)
+
 This example combines the benefits with symmetric encryption, asymmetric encryption and hash-based message authentication code when transmitting sensitive information.
 
-The principle is that the message is encrypted using symmetric encryption; **AES 256 bit encryption with a random initialization vector, (iv)**. 
+The principle is that the message is encrypted using symmetric encryption; **[AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 256 bit encryption with a random initialization vector, (iv)**. 
 
 The advantage of this is that AES is **fast** and **secure**.   
 The disadvatage is that symmetric encryption uses the same key to encrypt/decrypt so both sender and receiver need to share the key.   
@@ -11,7 +13,7 @@ To avoid manage and keep this shared key safe the sender will **generate a uniqu
 1 - Generate a unique session key, AES 256 bit encryption.  
 2 - Generate a random 128 bit initialization vector.  
 3 - Encrypt the message using the Session Key and the IV.  
-4 - Create a HMAC using the session key as the authentication code and HASH the encrypted message.
+4 - Create a **[HMAC](https://en.wikipedia.org/wiki/HMAC)** using the session key as the authentication code and HASH the encrypted message.  
 5 - Use the senders private key to sign the HMAC Hash.  
 
 The hybrid solution will use asymmetric encryption to protect the session key above. 
@@ -21,7 +23,9 @@ And only the holder of the private key can decrypt the session key and using it 
 
 So finally the sender must use the receivers **public key to encrypt the session key**.
 
-6 - Use the **RSA 2046 bit public key** to encrypt the AES 256 bit session key. 
+6 - Use the **[RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) 2046 bit public key** to encrypt the AES 256 bit session key.   
+
+7 - To add non-repudiation and authorisartion the sender will use their private kay to generate a [digital signature](https://en.wikipedia.org/wiki/Digital_signature)    
 
 Now the sender can transmit the encrypted data:
 
@@ -51,7 +55,8 @@ And finally we added a signature to verify that the message originates from a sp
 
 This example supports the four principles of cryptograhy : 
 
-- Confidentiality  
-- Integrity
-- Non-Repudiation
-- Authentication
+- Confidentiality - Encrypting data prevents it from being accessed without required keys. 
+- Integrity - In many scenarios, the sender and receiver of a message may have a need for confidence that the message has not been altered during transmission. Using HMAC will add this confidence as it uses the AES session key to HASH the encrypted message.
+- Non-Repudiation - By this property, an entity that has signed some information cannot at a later time deny having signed it. Similarly, access to the public key only does not enable a fraudulent party to fake a valid signature.
+- Authentication - 
+Although messages may often include information about the entity sending a message, that information may not be accurate. Digital signatures can be used to authenticate the source of messages.
